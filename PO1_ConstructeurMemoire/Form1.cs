@@ -10,6 +10,9 @@ namespace PO1_ConstructeurMemoire
 
         BindingSource bindingSourceListboxJoueurs = new BindingSource();
 
+        //bindingsource joue le role d'intermediare
+        //Le composant BindingSource joue le rôle d’intermédiaire fournissant des services de liaison
+        //et de gestions de devises.
         public Form1()
         {
             InitializeComponent();
@@ -26,7 +29,9 @@ namespace PO1_ConstructeurMemoire
         private void button_ajouterJoueur_Click(object sender, EventArgs e)
         {
             bool erreur = false;
-            Equipe equipeNouveauJoueur;//???
+            Equipe equipeNouveauJoueur = (Equipe)comboBox_ajouterJoueurEquipe.SelectedItem;
+
+            // si tu place Equipe devant combox aussi ce sera la meme chose avec les () on le met entre ()
             if(equipeNouveauJoueur == null)
             {
                 errorProvider_ajouterJoueur.SetError(comboBox_ajouterJoueurEquipe, "Veuillez choisir une équipe");
@@ -48,6 +53,10 @@ namespace PO1_ConstructeurMemoire
             }
             if (!erreur)
             {
+                Joueur nouveauJoueur = new Joueur(nomNouveauJoueur, equipeNouveauJoueur);
+
+                bindingSourceListboxEquipes.ResetBindings(false);
+                // quand on aplique les constructeurs pour creer une nouvelle variable
                ///???
             }
             
@@ -56,7 +65,7 @@ namespace PO1_ConstructeurMemoire
         private void button_modifierEquipeNom_Click(object sender, EventArgs e)
         {
             bool erreur = false;
-            Equipe equipeAModifier;// ???
+            Equipe equipeAModifier = listBox_equipes.SelectedItem as Equipe; // ???
             if(equipeAModifier == null)
             {
                 errorProvider_modifierEquipe.SetError(listBox_equipes, "Veuillez choisir une équipe");
@@ -78,16 +87,21 @@ namespace PO1_ConstructeurMemoire
             }
             if (!erreur)
             {
-               //???
+                equipeAModifier.Nom = nouveauNomEquipe;
+                bindingSourceListboxEquipes.ResetBindings(false);
+                bindingSourceComboBoxEquipes.ResetBindings(false);
+                bindingSourceListboxJoueurs.ResetBindings(false);
             }
+            //???
+        }
 
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //equipes.Add(new Equipe("Oilers", "Edmonton")); //Connor McDavid Leon Draisaitl
-            //equipes.Add(new Equipe("Canadiens", "Montreal"));//Cole Caufield
-            //equipes.Add(new Equipe("Jets", "Winnipeg"));//Mark Scheifele
+            equipes.Add(new Equipe("Oilers", "Edmonton")); //Connor McDavid Leon Draisaitl
+            equipes.Add(new Equipe("Canadiens", "Montreal"));//Cole Caufield
+            equipes.Add(new Equipe("Jets", "Winnipeg"));//Mark Scheifele
             bindingSourceListboxEquipes.ResetBindings(false);
             bindingSourceComboBoxEquipes.ResetBindings(false);
             bindingSourceListboxJoueurs.ResetBindings(false);
